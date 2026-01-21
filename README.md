@@ -1,4 +1,4 @@
-# Robotics Projects — Vihaan
+# Manipulator Projects
 
 This repository contains multiple ROS2 workspaces.  
 Each workspace represents a complete robot system (description + control + logic).
