@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="manipulator1">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="manipulator1_body">
+        <chain base_link="base_link" tip_link="bevel3"/>
+    </group>
+    <group name="manipulator1_gripper">
+        <joint name="bevel3_j_gmainbody"/>
+        <joint name="gripper_j_servo"/>
+        <joint name="servo_J_gl1"/>
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="home_bodypose" group="manipulator1_body">
+        <joint name="base_link_j_base_plate" value="0"/>
+        <joint name="bevel_coupler_j_bevel3" value="0"/>
+        <joint name="link3_j_bevel1" value="0"/>
+        <joint name="motor_holder_j_side_plate_12" value="0"/>
+        <joint name="side_plate1_j_side_plate12" value="0"/>
+    </group_state>
+    <group_state name="open_gripperpose" group="manipulator1_gripper">
+        <joint name="servo_J_gl1" value="0.7"/>
+    </group_state>
+    <group_state name="close_gripperpose" group="manipulator1_gripper">
+        <joint name="servo_J_gl1" value="0"/>
+    </group_state>
+    <group_state name="temp_bodypose" group="manipulator1_body">
+        <joint name="base_link_j_base_plate" value="0"/>
+        <joint name="bevel_coupler_j_bevel3" value="0"/>
+        <joint name="link3_j_bevel1" value="1.2144"/>
+        <joint name="motor_holder_j_side_plate_12" value="0.6012"/>
+        <joint name="side_plate1_j_side_plate12" value="0.6332"/>
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="manipulator1_eef" parent_link="bevel3" group="manipulator1_gripper"/>
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="world_j_baselink" type="fixed" parent_frame="world" child_link="base_link"/>
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="base_link" link2="base_plate" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="bevel1" reason="Never"/>
+    <disable_collisions link1="base_link" link2="bevel2" reason="Never"/>
+    <disable_collisions link1="base_link" link2="bevel3" reason="Never"/>
+    <disable_collisions link1="base_link" link2="bevelcoupler" reason="Never"/>
+    <disable_collisions link1="base_link" link2="gl1" reason="Never"/>
+    <disable_collisions link1="base_link" link2="gripper_mainbody" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link1" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link1_end_part" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link1_holder" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link1_side_plate1" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link1_side_plate12" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link2" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link3" reason="Never"/>
+    <disable_collisions link1="base_link" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="base_link" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="base_link" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="base_link" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="base_link" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="base_link" link2="servo" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="bevel1" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="bevel2" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="bevel3" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="bevelcoupler" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="gl1" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="gripper_mainbody" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link1" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link1_end_part" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link1_holder" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link1_side_plate1" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link1_side_plate12" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link2" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link3" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="base_plate" link2="plate_support" reason="Adjacent"/>
+    <disable_collisions link1="base_plate" link2="servo" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="bevel2" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="bevelcoupler" reason="Adjacent"/>
+    <disable_collisions link1="bevel1" link2="gl1" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="gripper_mainbody" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link1" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link1_end_part" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link1_holder" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link1_side_plate1" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link1_side_plate12" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link2" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="link3" reason="Adjacent"/>
+    <disable_collisions link1="bevel1" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="bevel1" link2="servo" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="bevel3" reason="Default"/>
+    <disable_collisions link1="bevel2" link2="bevelcoupler" reason="Adjacent"/>
+    <disable_collisions link1="bevel2" link2="gl1" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="gripper_mainbody" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link1" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link1_end_part" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link1_holder" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link1_side_plate1" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link1_side_plate12" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link2" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link3" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="bevel2" link2="servo" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="bevelcoupler" reason="Adjacent"/>
+    <disable_collisions link1="bevel3" link2="gl1" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="gripper_mainbody" reason="Adjacent"/>
+    <disable_collisions link1="bevel3" link2="link1" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link1_end_part" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link1_holder" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link1_side_plate1" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link1_side_plate12" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link2" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="bevel3" link2="servo" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="gl1" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="gripper_mainbody" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link1" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link1_end_part" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link1_holder" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link1_side_plate1" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link1_side_plate12" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link2" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link3" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="bevelcoupler" link2="servo" reason="Never"/>
+    <disable_collisions link1="gl1" link2="gripper_mainbody" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link1" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link1_end_part" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link1_holder" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link1_side_plate1" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link1_side_plate12" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="gl1" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="gl1" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="gl1" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="gl1" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="gl1" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="gl1" link2="servo" reason="Adjacent"/>
+    <disable_collisions link1="gripper_mainbody" link2="link1" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="link1_end_part" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="link1_holder" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="link1_side_plate1" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="link1_side_plate12" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="gripper_mainbody" link2="servo" reason="Adjacent"/>
+    <disable_collisions link1="link1" link2="link1_end_part" reason="Adjacent"/>
+    <disable_collisions link1="link1" link2="link1_holder" reason="Adjacent"/>
+    <disable_collisions link1="link1" link2="link1_side_plate1" reason="Never"/>
+    <disable_collisions link1="link1" link2="link1_side_plate12" reason="Never"/>
+    <disable_collisions link1="link1" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="link1" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1" link2="link2" reason="Never"/>
+    <disable_collisions link1="link1" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="link1" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="link1" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="link1" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link1" link2="link3" reason="Never"/>
+    <disable_collisions link1="link1" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link1" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link1" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link1" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link1" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link1" link2="servo" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="link1_holder" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="link1_side_plate1" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="link1_side_plate12" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="link2" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="link2_side_plate11" reason="Adjacent"/>
+    <disable_collisions link1="link1_end_part" link2="link2_side_plate21" reason="Adjacent"/>
+    <disable_collisions link1="link1_end_part" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="link3" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link1_end_part" link2="servo" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="link1_side_plate1" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="link1_side_plate12" reason="Default"/>
+    <disable_collisions link1="link1_holder" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="link2" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="link3" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="outer_shaft1" reason="Adjacent"/>
+    <disable_collisions link1="link1_holder" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link1_holder" link2="servo" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="link1_side_plate12" reason="Adjacent"/>
+    <disable_collisions link1="link1_side_plate1" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="link2" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="link3" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link1_side_plate1" link2="plate_support" reason="Adjacent"/>
+    <disable_collisions link1="link1_side_plate1" link2="servo" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="link1_side_plate2" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="link2" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="link3" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="outer_shaft1" reason="Adjacent"/>
+    <disable_collisions link1="link1_side_plate12" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link1_side_plate12" link2="servo" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="link1_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="link2" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="link3" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link1_side_plate2" link2="plate_support" reason="Adjacent"/>
+    <disable_collisions link1="link1_side_plate2" link2="servo" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="link2" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="link2_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="link3" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="outer_shaft1" reason="Adjacent"/>
+    <disable_collisions link1="link1_side_plate22" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link1_side_plate22" link2="servo" reason="Never"/>
+    <disable_collisions link1="link2" link2="link2_holder" reason="Adjacent"/>
+    <disable_collisions link1="link2" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="link2" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="link2" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="link2" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link2" link2="link3" reason="Never"/>
+    <disable_collisions link1="link2" link2="link3_holder" reason="Adjacent"/>
+    <disable_collisions link1="link2" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link2" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link2" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link2" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link2_holder" link2="link2_side_plate11" reason="Never"/>
+    <disable_collisions link1="link2_holder" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="link2_holder" link2="link2_side_plate22" reason="Default"/>
+    <disable_collisions link1="link2_holder" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link2_holder" link2="link3" reason="Never"/>
+    <disable_collisions link1="link2_holder" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link2_holder" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link2_holder" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link2_holder" link2="outer_shaft2" reason="Adjacent"/>
+    <disable_collisions link1="link2_holder" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link2_holder" link2="servo" reason="Never"/>
+    <disable_collisions link1="link2_side_plate11" link2="link2_side_plate21" reason="Never"/>
+    <disable_collisions link1="link2_side_plate11" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="link2_side_plate11" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link2_side_plate11" link2="link3" reason="Never"/>
+    <disable_collisions link1="link2_side_plate11" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link2_side_plate11" link2="motor_holder" reason="Adjacent"/>
+    <disable_collisions link1="link2_side_plate11" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link2_side_plate11" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link2_side_plate11" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link2_side_plate11" link2="servo" reason="Never"/>
+    <disable_collisions link1="link2_side_plate21" link2="link2_side_plate22" reason="Never"/>
+    <disable_collisions link1="link2_side_plate21" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link2_side_plate21" link2="link3" reason="Never"/>
+    <disable_collisions link1="link2_side_plate21" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link2_side_plate21" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link2_side_plate21" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link2_side_plate21" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link2_side_plate21" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link2_side_plate21" link2="servo" reason="Never"/>
+    <disable_collisions link1="link2_side_plate22" link2="link2_side_plate_12" reason="Never"/>
+    <disable_collisions link1="link2_side_plate22" link2="link3" reason="Never"/>
+    <disable_collisions link1="link2_side_plate22" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link2_side_plate22" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link2_side_plate22" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link2_side_plate22" link2="outer_shaft2" reason="Adjacent"/>
+    <disable_collisions link1="link2_side_plate22" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link2_side_plate22" link2="servo" reason="Never"/>
+    <disable_collisions link1="link2_side_plate_12" link2="link3" reason="Never"/>
+    <disable_collisions link1="link2_side_plate_12" link2="link3_holder" reason="Never"/>
+    <disable_collisions link1="link2_side_plate_12" link2="motor_holder" reason="Adjacent"/>
+    <disable_collisions link1="link2_side_plate_12" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link2_side_plate_12" link2="outer_shaft2" reason="Adjacent"/>
+    <disable_collisions link1="link2_side_plate_12" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link2_side_plate_12" link2="servo" reason="Never"/>
+    <disable_collisions link1="link3" link2="link3_holder" reason="Adjacent"/>
+    <disable_collisions link1="link3" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link3" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link3" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link3" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="link3_holder" link2="motor_holder" reason="Never"/>
+    <disable_collisions link1="link3_holder" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="link3_holder" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="link3_holder" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="motor_holder" link2="outer_shaft1" reason="Never"/>
+    <disable_collisions link1="motor_holder" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="motor_holder" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="motor_holder" link2="servo" reason="Never"/>
+    <disable_collisions link1="outer_shaft1" link2="outer_shaft2" reason="Never"/>
+    <disable_collisions link1="outer_shaft1" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="outer_shaft1" link2="servo" reason="Never"/>
+    <disable_collisions link1="outer_shaft2" link2="plate_support" reason="Never"/>
+    <disable_collisions link1="outer_shaft2" link2="servo" reason="Never"/>
+    <disable_collisions link1="plate_support" link2="servo" reason="Never"/>
+</robot>
