@@ -6,7 +6,7 @@
   <description>
      An automatically generated package with all the configuration and launch files for using the manipulator1 with the MoveIt Motion Planning Framework
   </description>
-  <maintainer email="satyajitgr9@gmail.com">satyajit</maintainer>
+  <maintainer email="vihaan30g@gmail.com">vihaan</maintainer>
 
   <license>BSD</license>
 
@@ -14,7 +14,7 @@
   <url type="bugtracker">https://github.com/ros-planning/moveit2/issues</url>
   <url type="repository">https://github.com/ros-planning/moveit2</url>
 
-  <author email="satyajitgr9@gmail.com">satyajit</author>
+  <author email="vihaan30g@gmail.com">vihaan</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
