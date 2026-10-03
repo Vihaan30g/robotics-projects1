@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robotic Manipulation Projects (ROS 2 + MoveIt 2) | Vihaan Gupta</title>
+<meta name="description" content="A collection of robotic manipulation workspaces: MoveIt 2 motion planning, goal-pose control, real-time Cartesian control with MoveIt Servo, and an autonomous sand scoop and berm construction manipulator.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--soft:#f6f8fa;--text:#1f2933;--muted:#5b6770;--line:#e1e5ea;--accent:#1d4ed8;--code:#0f172a;--codetext:#e2e8f0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--text);background:var(--bg);line-height:1.7;font-size:17px}
+header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line)}
+.bar{max-width:900px;margin:auto;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.bar a{color:var(--text);text-decoration:none;font-weight:600;font-size:15px}
+.bar a:hover{color:var(--accent)}
+main{max-width:900px;margin:auto;padding:32px 20px 60px}
+h1{font-size:2.1rem;line-height:1.25;margin:.2em 0}
+h2{font-size:1.5rem;margin:2.2em 0 .6em;padding-bottom:.3em;border-bottom:1px solid var(--line)}
+h3{font-size:1.15rem;margin:1.6em 0 .4em}
+p.lead{color:var(--muted);font-size:1.1rem}
+.meta{color:var(--muted);font-size:14px}
+a{color:var(--accent)}
+code{font-family:"JetBrains Mono",Consolas,monospace;font-size:.88em;background:var(--soft);border:1px solid var(--line);padding:1px 5px;border-radius:4px}
+.cb{position:relative;margin:14px 0}
+pre{margin:0;background:var(--code);color:var(--codetext);padding:16px 18px;border-radius:8px;overflow-x:auto;font-family:"JetBrains Mono",Consolas,monospace;font-size:14px;line-height:1.55}
+pre.diagram{background:var(--soft);color:var(--text);border:1px solid var(--line);margin:16px 0;font-size:13px}
+.cb button{position:absolute;top:8px;right:8px;background:#334155;color:#e2e8f0;border:0;border-radius:5px;padding:4px 10px;font-size:12px;cursor:pointer}
+.cb button:hover{background:#475569}
+.note,.warn{padding:12px 16px;border-radius:6px;margin:16px 0;border-left:4px solid var(--accent);background:#eff4ff}
+.warn{border-color:#b45309;background:#fff7ed}
+table{border-collapse:collapse;width:100%;font-size:15px;margin:14px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:8px 12px;text-align:left;vertical-align:top}
+th{background:var(--soft)}
+nav.toc{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:14px 22px;margin:22px 0}
+nav.toc ol{margin:6px 0 0;padding-left:20px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.btn{display:inline-block;padding:8px 16px;border-radius:6px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid var(--accent);background:var(--accent);color:#fff}
+.btn:hover{background:#1e40af}
+.btn.alt{background:#fff;color:var(--accent)}
+.btn.alt:hover{background:#eff4ff}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin:18px 0}
+.card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:8px;padding:16px 18px;background:#fff;text-decoration:none;color:var(--text);transition:border-color .15s,box-shadow .15s,transform .15s}
+.card:hover{border-color:var(--accent);box-shadow:0 4px 14px rgba(29,78,216,.12);transform:translateY(-2px)}
+.card .num{font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.04em;text-transform:uppercase}
+.card h3{margin:.3em 0 .3em;font-family:"JetBrains Mono",Consolas,monospace;font-size:1rem;word-break:break-all}
+.card p{margin:0 0 12px;font-size:15px;color:var(--muted);flex:1}
+.card .go{font-size:14px;font-weight:600;color:var(--accent)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tag{font-size:13px;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:1px 10px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:24px 20px;text-align:center;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <a href="https://vihaan30g.github.io/">&larr; All Projects</a>
+  <a href="https://github.com/Vihaan30g">GitHub</a>
+</div></header>
+
+<main>
+<p class="meta">Robotic Manipulation &middot; ROS 2 &middot; MoveIt 2 &middot; Motion Planning &middot; Last updated: October 2026</p>
+<h1>Robotic Manipulation Projects</h1>
+<p class="lead">A repository of five ROS 2 workspaces covering the main layers of manipulator software: collision-free motion planning, reaching a goal pose, real-time Cartesian control with MoveIt 2 Servo, and a complete autonomous task for the Caterpillar Autonomy Challenge.</p>
+
+<div class="btns">
+  <a class="btn" href="https://github.com/Vihaan30g/robotics-projects1">View full repository on GitHub</a>
+  <a class="btn alt" href="#projects">Jump to the projects</a>
+</div>
+
+<nav class="toc"><strong>Contents</strong>
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#projects">The five projects</a></li>
+<li><a href="#structure">Repository structure</a></li>
+<li><a href="#path">How the projects fit together</a></li>
+<li><a href="#use">Getting the code</a></li>
+</ol></nav>
+
+<h2 id="overview">1. Overview</h2>
+<p>This repository collects my work on robotic manipulation. Each folder is an independent ROS 2 workspace (prefixed <code>ws_</code>) built around one specific capability, so you can open any one of them without needing the others.</p>
+<p>Together they follow a natural progression: first planning a safe path with MoveIt 2, then commanding the arm to a target pose, then controlling it live in Cartesian space, and finally putting these pieces to work on a real competition task.</p>
+<div class="tags">
+<span class="tag">ROS 2</span><span class="tag">MoveIt 2</span><span class="tag">MoveIt Servo</span><span class="tag">Motion planning</span><span class="tag">Cartesian control</span><span class="tag">Manipulation</span><span class="tag">Autonomy</span>
+</div>
+
+<h2 id="projects">2. The five projects</h2>
+<p>Each card below opens that folder directly on GitHub.</p>
+<div class="cards">
+
+<a class="card" href="https://github.com/Vihaan30g/robotics-projects1/tree/main/ws_caterpillar_auto_final" target="_blank" rel="noopener">
+<span class="num">Project 1</span>
+<h3>ws_caterpillar_auto_final</h3>
+<p>Caterpillar Autonomy Challenge: autonomous sand scoop and berm construction manipulator code.</p>
+<span class="go">Open on GitHub &rarr;</span>
+</a>
+
+<a class="card" href="https://github.com/Vihaan30g/robotics-projects1/tree/main/ws_goalpose_moveit" target="_blank" rel="noopener">
+<span class="num">Project 2</span>
+<h3>ws_goalpose_moveit</h3>
+<p>Moves the manipulator to a specified goal pose using MoveIt 2.</p>
+<span class="go">Open on GitHub &rarr;</span>
+</a>
+
+<a class="card" href="https://github.com/Vihaan30g/robotics-projects1/tree/main/ws_IRC_2dof_cartesian" target="_blank" rel="noopener">
+<span class="num">Project 3</span>
+<h3>ws_IRC_2dof_cartesian</h3>
+<p>Real-time Cartesian control of the 2 DoF lower links, using MoveIt 2 Servo.</p>
+<span class="go">Open on GitHub &rarr;</span>
+</a>
+
+<a class="card" href="https://github.com/Vihaan30g/robotics-projects1/tree/main/ws_IRC_5dof_cartesian" target="_blank" rel="noopener">
+<span class="num">Project 4</span>
+<h3>ws_IRC_5dof_cartesian</h3>
+<p>Real-time Cartesian control of all 5 DoF, using MoveIt 2 Servo.</p>
+<span class="go">Open on GitHub &rarr;</span>
+</a>
+
+<a class="card" href="https://github.com/Vihaan30g/robotics-projects1/tree/main/ws_moveit_pathplan" target="_blank" rel="noopener">
+<span class="num">Project 5</span>
+<h3>ws_moveit_pathplan</h3>
+<p>MoveIt 2 motion planning that produces paths without any collision.</p>
+<span class="go">Open on GitHub &rarr;</span>
+</a>
+
+</div>
+
+<h3>At a glance</h3>
+<table>
+<tr><th>Folder</th><th>What it does</th><th>Core tool</th></tr>
+<tr><td><code>ws_caterpillar_auto_final</code></td><td>Autonomous sand scooping and berm construction for the Caterpillar Autonomy Challenge</td><td>ROS 2 + MoveIt 2</td></tr>
+<tr><td><code>ws_goalpose_moveit</code></td><td>Reach a specified goal pose</td><td>MoveIt 2</td></tr>
+<tr><td><code>ws_IRC_2dof_cartesian</code></td><td>Real-time Cartesian control, 2 DoF lower links</td><td>MoveIt 2 Servo</td></tr>
+<tr><td><code>ws_IRC_5dof_cartesian</code></td><td>Real-time Cartesian control, all 5 DoF</td><td>MoveIt 2 Servo</td></tr>
+<tr><td><code>ws_moveit_pathplan</code></td><td>Collision-free motion planning</td><td>MoveIt 2</td></tr>
+</table>
+
+<h2 id="structure">3. Repository structure</h2>
+<pre class="diagram"> robotics-projects1/
+ |
+ +-- ws_caterpillar_auto_final/     autonomous scoop + berm task
+ +-- ws_goalpose_moveit/            reach a goal pose
+ +-- ws_IRC_2dof_cartesian/         live Cartesian control (2 DoF)
+ +-- ws_IRC_5dof_cartesian/         live Cartesian control (5 DoF)
+ +-- ws_moveit_pathplan/            collision-free path planning</pre>
+<p>Every folder is a self-contained workspace, so each has its own <code>src</code> directory with the packages for that mini project.</p>
+
+<h2 id="path">4. How the projects fit together</h2>
+<p>The projects build on the same ideas at increasing levels of complexity:</p>
+<pre class="diagram"> PLAN a safe path          ws_moveit_pathplan
+        |
+        v
+ REACH a target pose       ws_goalpose_moveit
+        |
+        v
+ CONTROL live in space     ws_IRC_2dof_cartesian
+                           ws_IRC_5dof_cartesian
+        |
+        v
+ DO a full task            ws_caterpillar_auto_final</pre>
+<div class="note"><strong>Two ways of moving an arm.</strong> The planning projects compute a complete trajectory first and then execute it. The Servo projects work differently: they take a continuous stream of Cartesian commands and turn them into joint motion in real time, which suits teleoperation and fine adjustment.</div>
+
+<h2 id="use">5. Getting the code</h2>
+<p>Clone the repository, then enter the workspace you are interested in:</p>
+<div class="cb"><pre>git clone https://github.com/Vihaan30g/robotics-projects1.git
+cd robotics-projects1/ws_moveit_pathplan</pre></div>
+<p>Each workspace is a standard ROS 2 workspace, so after installing its dependencies it is built with <code>colcon build</code> and sourced with <code>source install/setup.bash</code>. Check the files inside each folder for its specific launch instructions.</p>
+</main>
+
+<footer>Written by Vihaan Gupta &middot; <a href="https://github.com/Vihaan30g">GitHub</a> &middot; <a href="https://github.com/Vihaan30g/robotics-projects1">This repository</a> &middot; <a href="https://www.youtube.com/@vihaan30g">YouTube</a> &middot; <a href="mailto:vihaan30g@gmail.com">vihaan30g@gmail.com</a></footer>
+
+<script>
+document.querySelectorAll('.cb').forEach(function(b){
+  var btn=document.createElement('button');btn.textContent='Copy';
+  btn.onclick=function(){
+    var t=b.querySelector('pre').innerText;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy'},1500)}).catch(function(){btn.textContent='Press Ctrl+C'});
+  };
+  b.appendChild(btn);
+});
+</script>
+</body>
+</html>
